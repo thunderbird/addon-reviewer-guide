@@ -35,7 +35,7 @@ It is good practice to regularly perform manual reviews of auto-approved add-ons
 
 <figure><img src=".gitbook/assets/review-tools-auto.JPG" alt=""><figcaption></figcaption></figure>
 
-## Setting up a Review Environment <a href="#docs-internal-guid-8c6e91ba-7fff-c368-645f-f24b7dca7e95" id="docs-internal-guid-8c6e91ba-7fff-c368-645f-f24b7dca7e95"></a>
+## Setting up a Review Environment <a href="#setting-up-a-review-environment" id="setting-up-a-review-environment"></a>
 
 As a reviewer, you have access to systems that allow approving and rejecting large amounts of add-ons. Add-ons that have not been reviewed may contain code that aims to control your computer, steal personal information or send messages on your behalf, impersonating you as a reviewer.
 
