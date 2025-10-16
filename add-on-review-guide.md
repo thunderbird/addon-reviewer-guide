@@ -17,12 +17,10 @@ Add-on reviewers help ensure add-ons are safe to use, reliable and clearly prese
 * **Reviews must be complete:** All issues should be clearly identified and documented, ensuring that the next submission can be approved once the developer addresses all listed items.\
   &#xNAN;_<mark style="color:$warning;">Exception: The first review step for some add-ons is to build them and verify that the uploaded XPI matches the generated one. If that step fails, reject directly with the Source archive mismatch canned response.</mark>_
 * **Minification:** The submitted XPI file must be reviewable and not include minified or otherwise unreadable code. There are two exceptions:
-
-1. The add-on uses well-known third-party libraries and includes links to the used files (e.g., in a <mark style="color:$success;">`README.md`</mark> or <mark style="color:$success;">`VENDORS.md`</mark> file). These files must be unchanged and match the referenced versions.
-2. The add-on includes a source archive with readable code and a build process that generates the submitted XPI. In this case, the source archive is reviewed instead of the submitted XPI file. If the submitted XPI does not match the generated XPI, the submission must be rejected with the "Source archive mismatch" canned response.
-
+  * The add-on uses well-known third-party libraries and includes links to the used files (e.g., in a <mark style="color:$success;">`README.md`</mark> or <mark style="color:$success;">`VENDORS.md`</mark> file). These files must be unchanged and match the referenced versions.
+  * The add-on includes a source archive with readable code and a build process that generates the submitted XPI. In this case, the source archive is reviewed instead of the submitted XPI file. If the submitted XPI does not match the generated XPI, the submission must be rejected with the "Source archive mismatch" canned response.
 * **Renamed Files:** During review, you may encounter renamed files. This is typically done to work around caching issues, especially in Themes and Experiment add-ons, and is not intended to make review more difficult.
-* **Ask for help:** If you are unsure about a review, don’t hesitate to ask for feedback in the add-on reviewer Matrix channel ([https://developer.thunderbird.net/add-ons/community](https://developer.thunderbird.net/add-ons/community)). There are no dumb questions when it comes to the review policies!
+* **Ask for help:** If you are unsure about a review, don’t hesitate to ask for feedback in our [closed topicbox group](https://thunderbird.topicbox.com/groups/addon-reviewers). There are no dumb questions when it comes to the review policies!
 
 ## Review Process
 
@@ -109,14 +107,12 @@ _<mark style="color:$warning;">Note: Your text is inserted into an email that ha
 
 While the review comments field is free-form, we have a de-facto standard approach that lists the review issues in numbered lists, each with a headline. Here is an example review text to give you an idea:
 
-> _This add-on didn't pass review because of the following problems:_
+> _Thank you for your submission. We recognize the effort you’ve put into updating this add-on, and greatly value your contribution to the Thunderbird add-on ecosystem. However, before it can be accepted, a few issues still need to be addressed:_
 >
 > _1) pages/inject.html:8 - We don't allow add-ons to use remote scripts because they can create serious security vulnerabilities. We also need to review all add-on code, and this makes it much more difficult. Please insert those scripts locally from your add-on code._\
 >
 >
 > _In addition, the following information is required to complete the review:_
->
->
 >
 > _1) Please provide us with detailed information on how to test this add-on. If authentication to a website is necessary, give us a test username and password to facilitate our work. This can be provided in the Whiteboard field, which can be found in the Edit Listing page under the Technical Details section. This information is only available to reviewers._
 
@@ -124,7 +120,7 @@ It is very important to **include the file and line number of each issue** you f
 
 If the same issue occurs more than a few times in each file, you should cite at least three lines where the issue occurs. If there are more than three occurrences of the same issue, you can let the developer know that similar issues exist in other parts of the file.
 
-_<mark style="color:$warning;">Note: You can read more about how to best make use of the responses and find examples that will help you make better review decisions in our Review Decision Guidelines.</mark>_
+_<mark style="color:$warning;">Note: You can read more about how to best make use of the responses and find examples that will help you make better review decisions in our</mark>_ [_<mark style="color:$warning;">Review Decision Guidelines</mark>_](add-on-review-guide.md#docs-internal-guid-9eb370d1-7fff-fd60-c47b-bc85bca46698)_<mark style="color:$warning;">.</mark>_
 
 Reviewers should specifically check the following items during code reviews:
 
@@ -140,21 +136,24 @@ The permission system already limits what extensions can do, but there are still
   \
   If you feel unsafe about a certain library, seek feedback from the reviewers team or perform a review of the library itself and make sure it complies to our policies. If you come across library methods that are potentially unsafe, find out if the method is actually used in the add-on.\
   \
-  The developer must provide links to the library files they used in accordance with our [Third-Party Library Usage](https://extensionworkshop.com/documentation/publish/third-party-library-usage). If the link is missing or the linked file does not match the included file, reject the submission with the Missing Library reference canned response.\
+  The developer must provide links to the library files they used in accordance with our [Third-Party Library Usage](https://extensionworkshop.com/documentation/publish/third-party-library-usage). If the link is missing or the linked file does not match the included file, reject the submission with the _Missing JavaScript Library reference_ canned response.\
   \
   Aside from libraries, many add-ons include minified, obfuscated or otherwise machine-generated code. Since this code can't be easily reviewed without the original sources, they have to be provided by the developer as a source archive. If that's not the case, reply to the developer with the Missing Source canned response. You can read more about our[ Source Code Submission guidelines](https://extensionworkshop.com/documentation/publish/source-code-submission).
 * **fetch() and XMLHttpRequest:** Add-ons may not upload sensitive user data, such as messages or contacts, to a remote system without the user’s knowledge and consent.
   * **User-Configured Connections (e.g., URL in options page):** If the user is required to set up the connection themselves (e.g., by entering a URL in the options page), this is considered a deliberate act. However, the options page must briefly list the data being sent.
   * **Hardcoded Third-Party Servers (as a service):** If a third-party server is hardcoded, the add-on requires a privacy policy. This policy must be entered directly into the appropriate field on ATN and must not be linked. The add-on must also request the <mark style="color:$success;">`sensitiveDataUpload`</mark> permission in its manifest.
-* **innerHTML:** Not permitted. Use the "innerHTML" canned response that provides alternatives and ensure all instances are listed.
+*   **innerHTML:** The use of _<mark style="color:$success;">`innerHTML`</mark>_ can often be replaced by more efficient methods. See the detailed explanations and alternatives in our [guide to avoid innerHTML](https://webextension-api.thunderbird.net/en/mv3/guides/innerHTML.html). Legitimate uses include:
 
-_<mark style="color:$warning;">Note: We usually do not review third-party libraries and currently allow the use of</mark> <mark style="color:$success;">`innerHTML`</mark> <mark style="color:$warning;">within them. This may be revisited in the future.</mark>_
+    * One-time creation of a dynamic DOM tree during page load, without later reassigning the content dynamically using _<mark style="color:$success;">`innerHTML`</mark>_ again.
+    * Rendering an external or user-provided _<mark style="color:$success;">`DOMPurify`</mark>_-sanitized HTML string - either once or repeatedly - into a viewing area.
 
-* **DOMParser():** If <mark style="color:$success;">`DOMParser()`</mark> is used to inject unsanitized content, it is as dangerous as using <mark style="color:$success;">`innerHTML`</mark>. Use the "DomParser" canned response.
+    For all other cases, use the _innerHTML_ canned response.  The use of unsanitized data must be rejected, while other cases can be requested to be fixed in the next release.\
+    \
+    &#xNAN;_<mark style="color:$warning;">Note: We generally do not flag the use of</mark> <mark style="color:$success;">`innerHTML`</mark> <mark style="color:$warning;">in well-known third-party libraries.</mark>_
 * **Unused Permissions:** Extensions must not request permissions which they do not need. Common cases are:
   * <mark style="color:$success;">**`tabs`**</mark>**,&#x20;**<mark style="color:$success;">**`activeTab`**</mark>**:** While heavily used in Firefox for web page operations, these are often unnecessary for Thunderbird. They grant host permission to any or the active tab, allowing reading of its URL and injecting content scripts into the tab.
   * <mark style="color:$success;">**`tabhide`**</mark>**:** This permission is unsupported.
-  * Most other permissions share the same name as their API, making usage checks straightforward. If unsure, contact the add-on reviewer channel.
+  * Most other permissions share the name of their API, making usage checks straightforward. If unsure, contact the add-on reviewer channel.
 * **Code Improvements:** If possible, conduct a code review to identify potential improvements or opportunities to utilize other API features ([https://webextension-api.thunderbird.net/](https://webextension-api.thunderbird.net/)).
 
 #### Experiment code review guidelines <a href="#docs-internal-guid-02233803-7fff-345e-b30d-ad9295ca03f5" id="docs-internal-guid-02233803-7fff-345e-b30d-ad9295ca03f5"></a>
